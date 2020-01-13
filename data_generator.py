@@ -9,8 +9,10 @@ class DataGenerator(tf.keras.utils.Sequence):
     def __init__(self, params):
         'Initialization'
         self.sequence_length = params['sequence_length']
-        self.t1 = params['t1']
-        self.t2 = params['t2']
+        self.t1_min = params['t1_min']
+        self.t1_max = params['t1_max']
+        self.t2_min = params['t2_min']
+        self.t2_max = params['t2_max']
         self.batch_size = params['batch_size']
         self.epochs_num = params['epochs_num']
         self.steps_per_epoch = params['steps_per_epoch']
@@ -52,7 +54,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         x[0] = self.vocab["s"]
         x[self.sequence_length - 1] = self.vocab["e"]
         class_index = randrange(4)
-        x[self.t1] = self.vocab["x"] if class_index < 2 else self.vocab["y"]
-        x[self.t2] = self.vocab["x"] if class_index % 2 == 0 else self.vocab["y"]
+        x[randrange(self.t1_min, self.t1_max)] = self.vocab["x"] if class_index < 2 else self.vocab["y"]
+        x[randrange(self.t2_min, self.t2_max)] = self.vocab["x"] if class_index % 2 == 0 else self.vocab["y"]
         y = self.classes_encoded[class_index]
         return x, y

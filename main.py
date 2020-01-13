@@ -4,9 +4,11 @@ from data_generator import DataGenerator
 
 # parameters
 params = {
-    'sequence_length': 20,
-    't1': 3,
-    't2': 6,
+    'sequence_length': 40,
+    't1_min': 12,
+    't1_max': 16,
+    't2_min': 30,
+    't2_max': 35,
     'batch_size': 4,
     'epochs_num': 3,
     'steps_per_epoch': 500,
