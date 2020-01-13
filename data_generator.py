@@ -8,7 +8,8 @@ class DataGenerator(tf.keras.utils.Sequence):
 
     def __init__(self, params):
         'Initialization'
-        self.sequence_length = params['sequence_length']
+        self.sequence_length_min = params['sequence_length_min']
+        self.sequence_length_max = params['sequence_length_max']
         self.t1_min = params['t1_min']
         self.t1_max = params['t1_max']
         self.t2_min = params['t2_min']
@@ -41,18 +42,21 @@ class DataGenerator(tf.keras.utils.Sequence):
         return self.steps_per_epoch
 
     def __getitem__(self, index):
-        x = np.empty((self.batch_size, self.sequence_length, self.vocab_encoded[0].shape[0]))
+        x = np.empty((self.batch_size, self.sequence_length_max, self.vocab_encoded[0].shape[0]))
         y = np.empty((self.batch_size, self.classes_encoded[0].shape[0]))
         for i in range(self.batch_size):
             x[i], y[i] = self.__sample_generation()
         return x, y
 
     def __sample_generation(self):
-        x = np.empty((self.sequence_length, self.vocab_encoded[0].shape[0]))
-        for i in range(self.sequence_length):
-            x[i] = self.vocab_encoded[randrange(4)]  # random symbol from a,b,c,d
+        x = np.empty((self.sequence_length_max, self.vocab_encoded[0].shape[0]))
+        sequence_length = randrange(self.sequence_length_min, self.sequence_length_max)
         x[0] = self.vocab["s"]
-        x[self.sequence_length - 1] = self.vocab["e"]
+        for i in range(1, sequence_length):
+            x[i] = self.vocab_encoded[randrange(4)]  # random symbol from a,b,c,d
+        for i in range(sequence_length, self.sequence_length_max):
+            x[i] = self.vocab["e"]
+
         class_index = randrange(4)
         x[randrange(self.t1_min, self.t1_max)] = self.vocab["x"] if class_index < 2 else self.vocab["y"]
         x[randrange(self.t2_min, self.t2_max)] = self.vocab["x"] if class_index % 2 == 0 else self.vocab["y"]
