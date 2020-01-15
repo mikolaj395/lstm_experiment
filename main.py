@@ -22,11 +22,15 @@ training_generator = DataGenerator(params)
 model = tf.keras.Sequential()
 model.add(
     tf.keras.layers.LSTM(10, batch_input_shape=(params['batch_size'], params['sequence_length_max'], 8),
-                              stateful=False))
+                         stateful=False))
 model.add(tf.keras.layers.Dense(4, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# Tensorboard
+tensorboard_cbk = tf.keras.callbacks.TensorBoard(log_dir='./logs', update_freq='batch')
 
 # Train model on dataset
 model.fit_generator(generator=training_generator,
                     epochs=params['epochs_num'],
-                    steps_per_epoch=params['steps_per_epoch'])
+                    steps_per_epoch=params['steps_per_epoch'],
+                    callbacks=[tensorboard_cbk])
