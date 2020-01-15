@@ -17,7 +17,6 @@ params = {
 
 # Generators
 training_generator = DataGenerator(params)
-validation_generator = DataGenerator(params)
 
 # Design model
 model = tf.keras.Sequential()
@@ -30,6 +29,4 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 # Train model on dataset
 model.fit_generator(generator=training_generator,
                     epochs=params['epochs_num'],
-                    steps_per_epoch=params['steps_per_epoch'],
-                    validation_data=validation_generator,
-                    validation_steps=params['steps_per_epoch'])
+                    steps_per_epoch=params['steps_per_epoch'])
