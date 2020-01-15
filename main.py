@@ -24,7 +24,7 @@ model.add(
     tf.keras.layers.LSTM(10, batch_input_shape=(params['batch_size'], params['sequence_length_max'], 8),
                          stateful=False))
 model.add(tf.keras.layers.Dense(4, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 
 # Tensorboard
 tensorboard_cbk = tf.keras.callbacks.TensorBoard(log_dir='./logs', update_freq='batch')
