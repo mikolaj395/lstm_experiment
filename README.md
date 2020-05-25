@@ -16,6 +16,23 @@ The task is fairly simple classification - two symbols determine one of four cla
 There are two main difficulties:
 * input sequence is very noisy - class is based on only 2 out of about a 100 symbols
 * important symbols are widely separated (at least 30 symbol gap)
+
+## Implementation
+### Data
+Training dataset has been replaced by random sequence generator based on [tf.keras.utils.Sequence](https://www.tensorflow.org/api_docs/python/tf/keras/utils/Sequence).
+### Sequence coding
+Sequences have been padded with 'E' symbol to maximum available length. Both sequence symbols and classes have been one hot encoded.
+### Neural net architectures
+Three different recurrent architectures have been tested:
+* [SimpleRNN](https://www.tensorflow.org/api_docs/python/tf/keras/layers/SimpleRNN)
+* [LSTM](https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM)
+* [GRU](https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRU)
+### Training paramteres
+* **Loss function**: binary crossentropy
+* **Optimizer**: Adam
+* **Metrics**: categorical accuracy
+* **Batch size**: 64
+
 ## Bibliography
 1. <a id="1"></a>Hochreiter, S. & Schmidhuber, Jü. (1997). Long short-term memory. Neural computation, 9, 1735--1780
 2. <a id="2"></a>[https://colah.github.io/posts/2015-08-Understanding-LSTMs/](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
