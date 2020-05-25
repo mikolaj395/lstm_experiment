@@ -22,7 +22,7 @@ There are two main difficulties:
 Training dataset has been replaced by random sequence generator based on [tf.keras.utils.Sequence](https://www.tensorflow.org/api_docs/python/tf/keras/utils/Sequence).
 ### Sequence coding
 Sequences have been padded with 'E' symbol to maximum available length. Both sequence symbols and classes have been one hot encoded.
-### Neural net architectures
+### Architectures
 Three different recurrent architectures have been tested:
 * [SimpleRNN](https://www.tensorflow.org/api_docs/python/tf/keras/layers/SimpleRNN)
 * [LSTM](https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM)
